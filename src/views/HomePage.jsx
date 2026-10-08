@@ -1,20 +1,24 @@
 import React from 'react';
-import CineSelector from '../components/CineSelector';
-import Pelicula from '../components/Pelicula';
-import { useMovies } from '../hooks/useMovies';
+import { useSearchParams } from 'react-router-dom';
+import CategorySelector from '../components/CategorySelector';
+import Libro from '../components/Libro';
+import { useBooks } from '../hooks/useBooks';
 
 const HomePage = () => {
-  const { movies, darkMode } = useMovies();
+    const { getBooksByCategory, darkMode } = useBooks();
+    const [searchParams] = useSearchParams();
+    const category = searchParams.get('category');
+    const books = getBooksByCategory(category);
 
-  return (
-    <div className={`home-page ${darkMode ? 'dark' : ''}`}>
-      <CineSelector />
+    return (
+        <div className={`home-page ${darkMode ? 'dark' : ''}`}>
+            <CategorySelector />
 
-      {movies.map((movie) => (
-        <Pelicula key={movie.id} movie={movie} />
-      ))}
-    </div>
-  );
+            {books.map((book) => (
+                <Libro key={book.id} book={book} />
+            ))}
+        </div>
+    );
 };
 
 export default HomePage;

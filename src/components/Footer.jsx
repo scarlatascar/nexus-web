@@ -1,11 +1,11 @@
 import React from 'react';
 
 const Footer = () => {
-  return (
-    <footer>
-      <p>&copy; 2024 UNIR Cinema. Todos los derechos reservados.</p>
-    </footer>
-  );
+    return (
+        <footer>
+            <p>&copy; 2026 Nexus. Librería universitaria, co-working y cafetería.</p>
+        </footer>
+    );
 };
 
 export default Footer;

@@ -8,92 +8,83 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './views/HomePage';
 import AboutUs from './views/AboutUs';
-import CinemaDetail from './views/CinemaDetail';
-import MovieDetails from './views/MovieDetails';
+import BookDetails from './views/BookDetails';
+import BookReservation from './views/BookReservation';
 import Login from './views/Login';
-import SeatSelection from './components/SeatSelection';
-import { useMovies } from './hooks/useMovies';
+import { useBooks } from './hooks/useBooks';
 
 // Página de administración protegida
 const AdminPage = () => {
-  const { darkMode } = useMovies();
+  const { darkMode } = useBooks();
 
   return (
-    <PrivateRoute>
-      <div className={`page-container ${darkMode ? 'dark' : ''}`}>
-        <div className="movie-details">
-          <h1>Panel de Administración</h1>
-          <p>Contenido solo para administradores</p>
+      <PrivateRoute>
+        <div className={`page-container ${darkMode ? 'dark' : ''}`}>
+          <div className="movie-details">
+            <h1>Panel de Administración</h1>
+            <p>Contenido solo para administradores</p>
 
-          <div className="movie-info-grid">
-            <div className="info-item">
-              <strong>Usuarios registrados</strong><br/>
-              4 usuarios
-            </div>
-            <div className="info-item">
-              <strong>Películas</strong><br/>
-              12 títulos
-            </div>
-            <div className="info-item">
-              <strong>Ciudades</strong><br/>
-              4 ubicaciones
-            </div>
-            <div className="info-item">
-              <strong>Reservas hoy</strong><br/>
-              156 entradas
+            <div className="movie-info-grid">
+              <div className="info-item">
+                <strong>Usuarios registrados</strong><br/>
+                4 usuarios
+              </div>
+              <div className="info-item">
+                <strong>Libros</strong><br/>
+                8 títulos
+              </div>
+              <div className="info-item">
+                <strong>Espacios</strong><br/>
+                3 zonas
+              </div>
+              <div className="info-item">
+                <strong>Reservas hoy</strong><br/>
+                156 reservas
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </PrivateRoute>
+      </PrivateRoute>
   );
 };
 
 function AppContent() {
-  const { darkMode } = useMovies();
+  const { darkMode } = useBooks();
 
   return (
-    <div className={`App ${darkMode ? 'dark' : ''}`}>
-      <Header />
+      <div className={`App ${darkMode ? 'dark' : ''}`}>
+        <Header />
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/movie/:id" element={<MovieDetails />} />
-        <Route
-          path="/cinema/:city"
-          element={
-            <PrivateRoute>
-              <CinemaDetail />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/movie/:id/session/:time"
-          element={
-            <PrivateRoute>
-              <SeatSelection />
-            </PrivateRoute>
-          }
-        />
-        <Route path="/admin" element={<AdminPage />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/book/:id" element={<BookDetails />} />
+          <Route
+              path="/book/:id/reserve"
+              element={
+                <PrivateRoute>
+                  <BookReservation />
+                </PrivateRoute>
+              }
+          />
+          <Route path="/admin" element={<AdminPage />} />
+        </Routes>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
   );
 }
 
 function App() {
   return (
-    <AuthProvider>
-      <GlobalProvider>
-        <Router>
-          <AppContent />
-        </Router>
-      </GlobalProvider>
-    </AuthProvider>
+      <AuthProvider>
+        <GlobalProvider>
+          <Router>
+            <AppContent />
+          </Router>
+        </GlobalProvider>
+      </AuthProvider>
   );
 }
 
